@@ -1,0 +1,17 @@
+.button {
+  font-size: 2em;
+  background-color: #fff;
+}
+
+.button-grid {
+  display: grid;
+  height: 100%;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-template-areas:
+    "clear clear clear divide"
+    "seven eight nine  multiply"
+    "four  five  six   subtract"
+    "one   two   three add"
+    "zero  zero  zero  equals";
+}
