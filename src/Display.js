@@ -1,9 +1,9 @@
 import React from 'react';
-import styles from './Display.module.css';
+import './Display.module.css';
 
 const Display = ({ value }) => {
   return (
-    <div className={styles.display}>
+    <div styleName="display">
       {value}
     </div>
   );

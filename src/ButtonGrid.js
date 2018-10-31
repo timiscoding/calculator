@@ -1,12 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './ButtonGrid.module.css';
+import classnames from 'classnames';
+import './ButtonGrid.module.css';
 
-const Button = ({ value, children }) => {
+const Button = ({ klass, children, value, onClick }) => {
+  // console.log('klass', );
   return (
     <button
-      className={styles.button}
-      style={{ gridArea: value }}
+      styleName={classnames('button', klass, {
+        operator: ['divide', 'multiply', 'add', 'subtract', 'equals'].includes(klass)
+      })}
+      onClick={onClick}
+      value={value}
     >
       {children}
     </button>
@@ -15,45 +20,72 @@ const Button = ({ value, children }) => {
 
 Button.propTypes = {
   children: PropTypes.node,
+  klass: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  onClick: PropTypes.func.isRequired,
 };
 
 
 const buttons = [
   {
     label: 'clear',
+    klass: 'clear',
     value: 'clear'
   },
   {
     label: '÷',
-    value: 'divide'
+    klass: 'divide',
+    value: '/',
   },
   {
     label: '-',
-    value: 'subtract'
+    klass: 'subtract',
+    value: '-',
   },
   {
     label: '+',
-    value: 'add'
+    klass: 'add',
+    value: '+',
   },
   {
     label: 'x',
-    value: 'multiply'
+    klass: 'multiply',
+    value: '*',
   },
   {
     label: '=',
-    value: 'equals'
+    klass: 'equals',
+    value: '=',
+  },
+  {
+    label: '.',
+    klass: 'decimal-point',
+    value: '.',
   },
   ...['zero','one','two','three','four','five','six','seven','eight','nine']
-    .map((n, i) => ({ label: i, value: n })),
+    .map((klass, i) => ({ label: i, klass, value: i })),
 ];
 
 
-const ButtonGrid = () => {
+const ButtonGrid = ({ onClick }) => {
   return (
-    <div className={styles["button-grid"]}>
-      {buttons.map(b => <Button value={b.value}>{b.label}</Button>)}
+    <div styleName="button-grid">
+      {buttons.map((b, i) => (
+        <Button
+          key={i}
+          value={b.value}
+          onClick={onClick}
+          klass={b.klass}
+        >
+          {b.label}
+        </Button>
+      ))}
     </div>
   );
 };
 
-export default ButtonGrid;
+ButtonGrid.propTypes = {
+  onClick: PropTypes.func.isRequired,
+};
+
+export { ButtonGrid as default, Button };
